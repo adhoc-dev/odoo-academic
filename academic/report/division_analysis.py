@@ -326,96 +326,96 @@ class AcademicDivisionAnalysis(models.Model):
     @api.multi
     def _compute_indicators(self):
         for rec in self:
-            rec.subi_internal_lang_value = rec._get_values(
+            subi_internal_lang_value = rec._get_values(
                 rec.subi_internal_lang_ind_id, rec.subi_internal_lang_sub_id,
                 rec.subi_internal_lang_weight)
-            rec.subi_internal_math_value = rec._get_values(
+            subi_internal_math_value = rec._get_values(
                 rec.subi_internal_math_ind_id, rec.subi_internal_math_sub_id,
                 rec.subi_internal_math_weight)
 
-            rec.subi_external_lang_value = rec._get_values(
+            subi_external_lang_value = rec._get_values(
                 rec.subi_external_lang_ind_id, rec.subi_external_lang_sub_id,
                 rec.subi_external_lang_weight)
-            rec.subi_external_math_value = rec._get_values(
+            subi_external_math_value = rec._get_values(
                 rec.subi_external_math_ind_id, rec.subi_external_math_sub_id,
                 rec.subi_external_math_weight)
 
-            rec.subi_avg_hour_lang_value = rec._get_values(
+            subi_avg_hour_lang_value = rec._get_values(
                 rec.subi_avg_hour_lang_ind_id, rec.subi_avg_hour_lang_sub_id,
                 rec.subi_avg_hour_lang_weight)
-            rec.subi_avg_hour_math_value = rec._get_values(
+            subi_avg_hour_math_value = rec._get_values(
                 rec.subi_avg_hour_math_ind_id, rec.subi_avg_hour_math_sub_id,
                 rec.subi_avg_hour_math_weight)
 
-            rec.subi_avg_topics_lang_value = rec._get_values(
+            subi_avg_topics_lang_value = rec._get_values(
                 rec.subi_avg_topics_lang_ind_id,
                 rec.subi_avg_topics_lang_sub_id,
                 rec.subi_avg_topics_lang_weight)
-            rec.subi_avg_topics_math_value = rec._get_values(
+            subi_avg_topics_math_value = rec._get_values(
                 rec.subi_avg_topics_math_ind_id,
                 rec.subi_avg_topics_math_sub_id,
                 rec.subi_avg_topics_math_weight)
 
-            rec.subi_avg_spec_proj_lang_value = rec._get_values(
+            subi_avg_spec_proj_lang_value = rec._get_values(
                 rec.subi_avg_spec_proj_lang_ind_id, rec.
                 subi_avg_spec_proj_lang_sub_id,
                 rec.subi_avg_spec_proj_lang_weight)
-            rec.subi_avg_spec_proj_math_value = rec._get_values(
+            subi_avg_spec_proj_math_value = rec._get_values(
                 rec.subi_avg_spec_proj_math_ind_id, rec.
                 subi_avg_spec_proj_math_sub_id,
                 rec.subi_avg_spec_proj_math_weight)
 
-            rec.subi_avg_relevant_training_lang_value = rec._get_values(
+            subi_avg_relevant_training_lang_value = rec._get_values(
                 rec.subi_avg_relevant_training_lang_ind_id, rec.
                 subi_avg_relevant_training_lang_sub_id, rec.
                 subi_avg_relevant_training_lang_weight)
-            rec.subi_avg_relevant_training_math_value = rec._get_values(
+            subi_avg_relevant_training_math_value = rec._get_values(
                 rec.subi_avg_relevant_training_math_ind_id, rec.
                 subi_avg_relevant_training_math_sub_id, rec.
                 subi_avg_relevant_training_math_weight)
 
-            rec.subi_avg_teacher_interview_lang_value = rec._get_values(
+            subi_avg_teacher_interview_lang_value = rec._get_values(
                 rec.subi_avg_teacher_interview_lang_ind_id, rec.
                 subi_avg_teacher_interview_lang_sub_id, rec.
                 subi_avg_teacher_interview_lang_weight)
-            rec.subi_avg_teacher_interview_math_value = rec._get_values(
+            subi_avg_teacher_interview_math_value = rec._get_values(
                 rec.subi_avg_teacher_interview_math_ind_id, rec.
                 subi_avg_teacher_interview_math_sub_id, rec.
                 subi_avg_teacher_interview_math_weight)
 
-            rec.subi_timextopic_lang_value = rec._get_values(
+            subi_timextopic_lang_value = rec._get_values(
                 rec.subi_timextopic_lang_ind_id,
                 rec.subi_timextopic_lang_sub_id,
                 rec.subi_timextopic_lang_weight)
-            rec.subi_timextopic_math_value = rec._get_values(
+            subi_timextopic_math_value = rec._get_values(
                 rec.subi_timextopic_math_ind_id,
                 rec.subi_timextopic_math_sub_id,
                 rec.subi_timextopic_math_weight)
 
-            rec.subi_avg_parent_att_value = rec._get_values(
+            subi_avg_parent_att_value = rec._get_values(
                 rec.subi_avg_parent_att_ind_id, rec.subi_avg_parent_att_sub_id,
                 rec.subi_avg_parent_att_weight)
 
         # Performance -
-            rec.student_perfomance = rec.subi_internal_lang_value + \
-                rec.subi_internal_math_value \
-                + rec.subi_external_lang_value + rec.subi_external_math_value
+            student_perfomance = subi_internal_lang_value + \
+                subi_internal_math_value \
+                + subi_external_lang_value + subi_external_math_value
 
-            rec.teacher_perfomance = rec.subi_avg_hour_lang_value +\
-                rec.subi_avg_hour_math_value \
-                + rec.subi_avg_topics_lang_value +\
-                rec.subi_avg_topics_math_value \
-                + rec.subi_avg_spec_proj_lang_value +\
-                rec.subi_avg_spec_proj_math_value \
-                + rec.subi_avg_relevant_training_lang_value +\
-                rec.subi_avg_relevant_training_math_value
+            teacher_perfomance = subi_avg_hour_lang_value +\
+                subi_avg_hour_math_value \
+                + subi_avg_topics_lang_value +\
+                subi_avg_topics_math_value \
+                + subi_avg_spec_proj_lang_value +\
+                subi_avg_spec_proj_math_value \
+                + subi_avg_relevant_training_lang_value +\
+                subi_avg_relevant_training_math_value
 
-            rec.administrator_perfomance = \
-                rec.subi_avg_teacher_interview_lang_value + \
-                rec.subi_avg_teacher_interview_math_value \
-                + rec.subi_timextopic_lang_value +\
-                rec.subi_timextopic_math_value \
-                + rec.subi_avg_parent_att_value
+            administrator_perfomance = \
+                subi_avg_teacher_interview_lang_value + \
+                subi_avg_teacher_interview_math_value \
+                + subi_timextopic_lang_value +\
+                subi_timextopic_math_value \
+                + subi_avg_parent_att_value
 
         # Get names
         groups = self.env.context.get('groups', False)
@@ -425,11 +425,37 @@ class AcademicDivisionAnalysis(models.Model):
             'consider_disabled_person', False)
         include_diagnosis_eval = self.env.context.get(
             'include_diagnosis_eval', False)
-        rec.groups = groups
-        rec.periods = periods
-        rec.company = company
-        rec.consider_disabled_person = consider_disabled_person
-        rec.include_diagnosis_eval = include_diagnosis_eval
+        rec.update({
+            'subi_internal_lang_value': subi_internal_lang_value,
+            'subi_internal_math_value': subi_internal_math_value,
+            'subi_external_lang_value': subi_external_lang_value,
+            'subi_external_math_value': subi_external_math_value,
+            'subi_avg_hour_lang_value': subi_avg_hour_lang_value,
+            'subi_avg_hour_math_value': subi_avg_hour_math_value,
+            'subi_avg_topics_lang_value': subi_avg_topics_lang_value,
+            'subi_avg_topics_math_value': subi_avg_topics_math_value,
+            'subi_avg_spec_proj_lang_value': subi_avg_spec_proj_lang_value,
+            'subi_avg_spec_proj_math_value': subi_avg_spec_proj_math_value,
+            'subi_avg_relevant_training_lang_value':
+            subi_avg_relevant_training_lang_value,
+            'subi_avg_relevant_training_lang_value':
+            subi_avg_relevant_training_math_value,
+            'subi_avg_teacher_interview_lang_value':
+            subi_avg_teacher_interview_lang_value,
+            'subi_avg_teacher_interview_math_value':
+            subi_avg_teacher_interview_math_value,
+            'subi_timextopic_lang_value': subi_timextopic_lang_value,
+            'subi_timextopic_math_value': subi_timextopic_math_value,
+            'subi_avg_parent_att_value': subi_avg_parent_att_value,
+            'student_perfomance': student_perfomance,
+            'teacher_perfomance': teacher_perfomance,
+            'administrator_perfomance': administrator_perfomance,
+            'groups': groups,
+            'periods': periods,
+            'company': company,
+            'consider_disabled_person': consider_disabled_person,
+            'include_diagnosis_eval': include_diagnosis_eval,
+        })
 
     def _get_values(self, indicator, subject, weight):
 
@@ -521,10 +547,8 @@ class AcademicDivisionAnalysis(models.Model):
                         group_indicator_rel_scores)
                     max_group_scores.append(max_group_indicator_rel_score)
                     if len(max_group_scores) != 0:
-                        value = (
-                            sum(
-                                max_group_scores) / len(
-                                    max_group_scores)) * (weight / 100.0)
+                        value = (sum(max_group_scores) / len(
+                            max_group_scores)) * (weight / 100.0)
 
         elif indicator.calc_type == 'group_average':
             if group_ids:
