@@ -3,7 +3,7 @@
 # directory
 ##############################################################################
 from odoo import models, fields, api
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError, ValidationError
 
 
 class ResPartner(models.Model):
@@ -29,3 +29,25 @@ class ResPartner(models.Model):
         ('link_unique',
          'unique(student_id, partner_id)',
          'El contacto debe ser agregado por unica vez en cada familia o estudiante')]
+
+    def write(self, vals):
+        if 'role_ids' in vals and self.student_id.partner_type == 'family':
+            self._check_active_sale_orders(vals.get('role_ids', []))
+        return super().write(vals)
+
+    def _check_active_sale_orders(self, role_ids):
+        """
+        Si se borra el rol de responsable de pago en el contacto, se verifica
+        que el mismo no tenga órdenes de venta activas.
+        """
+        roles_to_remove = set(self.role_ids.ids) - set(role_ids[0][2])
+        if self.env.ref('academic.paying_role').id in roles_to_remove:
+            orders = self.env['sale.order'].search([
+                ('partner_invoice_id', '=', self.partner_id.id),
+                ('state', 'in', ['draft', 'sent']),
+                ('partner_id', 'in', self.student_id.student_ids.ids),
+            ])
+            if orders:
+                msg = "Hay órdenes de venta activas que tienen el responsable de pago %s en la dirección de facturación." % self.partner_id.name
+                msg += "\nLas siguientes órdenes tienen esa condición:\n\n - %s" % '\n - '.join(orders.mapped('name'))
+                raise ValidationError(msg)

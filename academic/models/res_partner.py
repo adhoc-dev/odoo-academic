@@ -3,7 +3,7 @@
 # directory
 ##############################################################################
 from odoo import api, models, fields, _
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError, ValidationError
 
 
 class ResPartner(models.Model):
@@ -132,6 +132,8 @@ class ResPartner(models.Model):
     def write(self, vals):
         if 'is_company' in vals and vals.get('is_company'):
             vals['partner_type'] = False
+        if self.partner_type and self.partner_type == 'family':
+            self._check_active_sale_orders(vals.get('student_link_ids', []))
         return super(ResPartner, self).write(vals)
 
     def quickly_create_portal_user(self):
@@ -147,3 +149,21 @@ class ResPartner(models.Model):
             active_model='res.partner').create({})
         wizard.user_ids.write({'in_portal': True})
         wizard.action_apply()
+
+    def _check_active_sale_orders(self, student_link_ids):
+        """
+        Al borrar del one2many un contacto, se verifica que el mismo no tenga
+        órdenes de venta activas.
+        """
+        for operation, partner_link_id, _ in student_link_ids:
+            if operation == 2:
+                partner_link = self.env['res.partner.link'].browse(partner_link_id)
+                orders = self.env['sale.order'].search([
+                    ('partner_invoice_id', '=', partner_link.partner_id.id),
+                    ('state', 'in', ['draft', 'sent']),
+                    ('partner_id', 'in', self.student_ids.ids),
+                ])
+                if orders:
+                    msg = "Hay órdenes de venta activas que tienen el responsable de pago %s en la dirección de facturación." % partner_link.partner_id.name
+                    msg += "\nLas siguientes órdenes tienen esa condición:\n\n - %s" % '\n - '.join(orders.mapped('name'))
+                    raise ValidationError(msg)
